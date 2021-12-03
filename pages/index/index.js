@@ -23,17 +23,47 @@ Page({
         canIUseGetUserProfile: true
       })
     }
+    
   },
-  getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log(res)
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
+  // 获取用户信息
+getUser(e){
+  var that=this
+  wx.getUserProfile({
+    desc: '正在获取', //不写不弹提示框
+    success: function (res) {
+      console.log("获取成功:", res)
+    that.setData({
+      userInfo:res.userInfo
+    })
+    },
+    fail: function (err) {
+      console.log("获取失败: ", err)
+      // 提示信息
+      wx.showToast({
+        title: '请给予小程序授权！',
+        icon: 'none',
+        duration: 2000//持续的时间
+      })
+    }
+  })
+},
+// 跳转登录页面
+  Tologin(e) {
+    wx.navigateTo({
+      // 跳转链接
+      url: '/pages/login/login?id=1',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        acceptDataFromOpenedPage: function(data) {
+          console.log(data)
+        },
+        someEvent: function(data) {
+          console.log(data)
+        }
+      },
+      success: function(res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit('acceptDataFromOpenerPage', { data: 'test' })
       }
     })
   },
@@ -44,5 +74,6 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+    console.log(this.data)
   }
 })

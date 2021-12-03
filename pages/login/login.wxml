@@ -1,0 +1,12 @@
+<!--pages/login/login.wxml-->
+<view class="login">
+<view class="content">
+<text>登录</text>
+<view class="login-content">
+<view style="display: flex;flex-direction: row;align-items: center;">手机号：<input style="width: 70%; display: inline-block;border: 1px solid black;" type="text" placeholder="请输入手机号" /></view>
+<view style="display: flex;flex-direction: row;align-items: center;">密   码： <input style="display: inline-block;border: 1px solid black;" type="text" placeholder="请输入密码" /></view>
+<button>提交</button>
+暂无账号，立即注册>>
+</view>
+</view>
+</view>
